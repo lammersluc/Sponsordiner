@@ -1,9 +1,11 @@
 import { Elysia, t } from "elysia";
+import { cors } from "@elysiajs/cors";
 
 const app = new Elysia()
+    .use(cors())
     .post("/api/reserveringen", async ({ body, set }) => {
 
-        if (body.personen > 15 || body.personen < 1) { set.status = 406; return; }
+        if (body.personen > 15 || body.personen < 1 || body.wijn > body.personen) { set.status = 406; return; }
         if (!body.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
             { set.status = 406; return; }
         
@@ -29,6 +31,7 @@ const app = new Elysia()
             naam: t.String(),
             email: t.String(),
             personen: t.Number(),
+            wijn: t.Number(),
             extra: t.Optional(t.String())
         })
     })
