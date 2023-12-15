@@ -94,11 +94,11 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         >
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:bg-zinc-800/30">
+        <p className="z-0 rounded-md left-0 top-0 flex w-full justify-center pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:bg-zinc-800/30">
           Doneer nu!&nbsp;
         </p>
         </a>
-        <div className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center bg-gradient-to-t from-black via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+        <div className="bottom-0 left-0 flex h-24 w-full items-end justify-center bg-gradient-to-t lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
             className="pointer-events-none flex place-items-center gap-2 p-6 lg:pointer-events-auto lg:p-0"
             href="https://www.runforkikamarathon.nl"
@@ -117,7 +117,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative flex flex-col items-center p-14 rounded-md shadow-m"
+      <div className="relative flex flex-col items-center p-8 rounded-md shadow-m"
       style={{
         marginBottom: '-2rem',
       }}>
@@ -198,7 +198,7 @@ export default function Home() {
 
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left z-10">
+      <div className="m-10 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left z-10">
         <a
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
