@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image'
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function Home() {
 
@@ -26,27 +25,32 @@ export default function Home() {
     e.preventDefault();
 
     if (formData.naam == '') {
-      toast('Vul uw naam in')
+      alert('Vul uw naam in.');
       return;
     }
 
     if (!formData.email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-      toast('Email bestaat niet')
+      alert('Email bestaat niet.');
       return;
     }
 
     if (formData.personen < 1) {
-      toast('Vul het aantal personen in');
+      alert('Vul het aantal personen in.');
       return;
     }
 
     if (formData.personen > 15) {
-      toast('Maximaal 15 personen per reservering');
+      alert('Het aantal personen mag niet hoger zijn dan 15.');
       return;
     }
 
-    if (formData.wijn > formData.personen || formData.wijn < 0) {
-      toast('Incorrect wijn arrangement');
+    if (formData.wijn < 0) {
+      alert('Vul een geldig aantal personen in voor het wijn arrangement.');
+      return;
+    }
+
+    if (formData.wijn > formData.personen) {
+      alert('Het aantal personen voor het wijn arrangement kan niet hoger zijn dan het aantal personen.');
       return;
     }
 
@@ -69,13 +73,13 @@ export default function Home() {
     })
 
     if (result.status == 200) {
-      toast('Bedankt voor uw reservering! U ontvangt een bevestiging per mail')
+      alert('Bedankt voor uw reservering! U ontvangt een bevestiging per mail.')
       setStatus('Gereserveerd!')
     } else if (result.status == 409) {
-      toast('Emailadres is al in gebruik')
+      alert('Er is al een reservering gemaakt met dit email adres.')
       setStatus('Reserveer')
     } else if (result.status == 403) {
-      toast('Reserveringen zijn gesloten')
+      alert('Reserveringen zijn gesloten.')
       setStatus('Gesloten')
     } else {
       setStatus('Reserveer')
@@ -90,7 +94,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         >
-        <p className="z-0 rounded-md left-0 top-0 flex w-full justify-center pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit shadow-lg lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:bg-zinc-800/30">
+        <p className="z-0 rounded-md left-0 top-0 flex w-full justify-center pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:bg-zinc-800/30">
           Doneer nu!&nbsp;
         </p>
         </a>
@@ -113,7 +117,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative flex flex-col items-center p-8"
+      <div className="relative flex flex-col items-center p-8 rounded-md shadow-m"
       style={{
         marginBottom: '-2rem',
       }}>
@@ -121,20 +125,19 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
 
           <label className="flex flex-col">
-
             <span className="text-sm font-semibold mb-1">Naam</span>
             <input
               type="text"
               name="naam"
               value={formData.naam}
               onChange={handleChange}
-              className="border rounded-md shadow-lg p-2"
+              className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
           </label>
 
           <label className="flex flex-col">
-
             <span className="text-sm font-semibold mb-1">Email</span>
             <input
               color="black"
@@ -142,53 +145,52 @@ export default function Home() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="border rounded-md shadow-lg p-2"
+              className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
-
           </label>
 
           <label className="flex flex-col">
-
             <span className="text-sm font-semibold mb-1">Totaal Personen</span>
             <input
               type="number"
               name="personen"
               value={formData.personen}
               onChange={handleChange}
-              className="border rounded-md shadow-lg p-2"
+              className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
           </label>
 
           <label className="flex flex-col">
 
-            <span className="text-sm font-semibold mb-1">Personen Wijnarrangement (+€22,50)</span>
+            <span className="text-sm font-semibold mb-1">Personen Wijn Arrangement (+€22,50)</span>
               <input
                 type="number"
                 name="wijn"
                 value={formData.wijn}
                 onChange={handleChange}
-                className="border rounded-md shadow-lg p-2"
+                className="border rounded-md p-2"
                 style={{ color: 'black' }}
+                required={true}
               />
 
           </label>
 
           <label className="flex flex-col">
-
             <span className="text-sm font-semibold">Dieet Wensen </span><span className="text-xs mb-1">(Vegetarisch, Allergenen...)</span>
             <textarea
               name="extra"
               value={formData.extra}
               onChange={handleChange}
-              className="border rounded-md shadow-lg p-2"
+              className="border rounded-md p-2"
               style={{ color: 'black' }}
             />
-
           </label>
 
-          <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
+          <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-300">
             {status}
           </button>
 
@@ -248,11 +250,10 @@ export default function Home() {
             KiKa{' '}
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            De opbrengsten gaan naar de Run For KiKa Marathon.
+            Dit diner is onderdeel van de Run For KiKa Marathon.
           </p>
         </a>
       </div>
-      <Toaster containerStyle={{textAlign:'center'}}/>
     </main>
   )
 }
