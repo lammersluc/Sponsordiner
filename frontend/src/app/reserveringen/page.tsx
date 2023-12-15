@@ -24,7 +24,7 @@ export default function Home() {
 
     const data = await fetch('https://maud.lammers.me/api/reserveringen', {
       headers: {
-        'Authorization': `Bearer h53aEQTJMqiLXvyGdyQ6QM2t1yPdQ9lw`
+        'Authorization': `Bearer ${authData.token}`
       }
     });
 
