@@ -64,7 +64,7 @@ const app = new Elysia()
                         </ul>
         
                         <p>Bedankt voor je reservering aan het sponsordiner. Ik kijken ernaar uit je te verwelkomen!</p>
-                        <p>Op 24 maart 2024 bent u welkom vanaf 17:30, om 18:00 zal het diner starten. De locatie is Nieuwstraat 51, 6021 HP Budel.</p>
+                        <p>Op 24 maart 2024 bent u welkom vanaf 17.30, om 18.00 zal het diner starten. De locatie is Nieuwstraat 51, 6021 HP Budel.</p>
         
                         <p>Met vriendelijke groet,<br />Maud Lammers</p>
                     </div>
