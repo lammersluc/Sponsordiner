@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default function Home() {
 
+  const [reserveringenVisible, setReserveringenVisible] = useState(false);
   const [reserveringen, setReserveringen] = useState([]);
   const [authData, setAuthData] = useState({
     token: '',
@@ -42,13 +43,15 @@ export default function Home() {
       );
 
     }));
+
+    setReserveringenVisible(true);
     
   }
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-8">
       <div className="flex flex-col items-center justify-center w-full p-4">
-        {reserveringen.length == 0 &&
+        {!reserveringenVisible &&
             <div className="relative flex flex-col items-center p-14 z-10 rounded-md shadow-m">
 
             <form onSubmit={handleAuth} className="flex flex-col space-y-4">
@@ -73,7 +76,7 @@ export default function Home() {
             </form>
       
           </div>}
-        {reserveringen}
+        {reserveringenVisible && reserveringen}
       </div>
     </main>
   )
