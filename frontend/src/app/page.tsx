@@ -132,6 +132,7 @@ export default function Home() {
               onChange={handleChange}
               className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
           </label>
 
@@ -145,6 +146,7 @@ export default function Home() {
               onChange={handleChange}
               className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
           </label>
 
@@ -157,6 +159,7 @@ export default function Home() {
               onChange={handleChange}
               className="border rounded-md p-2"
               style={{ color: 'black' }}
+              required={true}
             />
           </label>
 
@@ -170,6 +173,7 @@ export default function Home() {
                 onChange={handleChange}
                 className="border rounded-md p-2"
                 style={{ color: 'black' }}
+                required={true}
               />
 
           </label>

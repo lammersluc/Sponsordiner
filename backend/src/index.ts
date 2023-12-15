@@ -1,5 +1,8 @@
 import { Elysia, t } from "elysia";
 import { cors } from "@elysiajs/cors";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = new Elysia()
     .use(cors())
@@ -21,8 +24,60 @@ const app = new Elysia()
         if (i > 80) { set.status = 403; return; }
 
         await data.push(body);
-        Bun.write("data/reserveringen.json", JSON.stringify(data));
+        await Bun.write("data/reserveringen.json", JSON.stringify(data));
 
+        const check = await Bun.file("data/reserveringen.json").json();
+
+        if (!check.find((r: any) => r.email == body.email)) { set.status = 500; return; }
+
+        await resend.emails.send({
+            from: 'Sponsordiner <onboarding@resend.dev>',
+            to: [body.email, 'maud.lammers.11@gmail.com'],
+            subject: 'Sponsordiner reservering',
+            html: `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Reserveringsbevestiging</title>
+                </head>
+                <body style="font-family: Arial, sans-serif;">
+        
+                    <div style="background-color: rgb(245, 130, 32); color: #fff; padding: 20px;">
+                        <h2>Reserveringsbevestiging - Sponsordiner</h2>
+                    </div>
+        
+                    <div style="padding: 20px;">
+                        <p>Beste <strong>${body.naam}</strong>,</p>
+        
+                        <p>Bedankt voor je reservering voor het sponsordiner. Hier zijn de details van je reservering:</p>
+        
+                        <ul>
+                            <li><strong>Naam:</strong> ${body.naam}</li>
+                            <li><strong>Email:</strong> ${body.email}</li>
+                            <li><strong>Aantal Personen:</strong> ${body.personen}</li>
+                            <li><strong>Aantal Wijnarrangementen:</strong> ${body.wijn}</li>
+                            <li><strong>Dieetwensen:</strong> ${body.extra ?? 'geen'}</li>
+                        </ul>
+        
+                        <p>Bedankt voor je reservering aan het sponsordiner. Ik kijken ernaar uit je te verwelkomen!</p>
+                        <p>Op 24 maart 2024 bent u welkom vanaf 17:30, om 18:00 zal het diner starten. De locatie is Nieuwstraat 51, 6021 HP Budel.</p>
+        
+                        <p>Met vriendelijke groet,<br />Maud Lammers</p>
+                    </div>
+        
+                    <a href='https://www.runforkikamarathon.nl/maud-lammers-wenen-2024' target='_blank'>
+                    <div style="background-color: rgb(82, 41, 136); color: #fff; padding: 10px; text-align: center;">
+                        <p>Doneren kan hier</p>
+                    </div>
+                    </a>
+        
+                </body>
+                </html>
+            `
+        });
+        
         set.status = 200;
         return;
 
