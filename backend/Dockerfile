@@ -6,6 +6,7 @@ COPY src ./src
 COPY package.json .
 
 ARG RESEND_API_KEY
+ARG BEARER_TOKEN
 
 RUN bun install
 
