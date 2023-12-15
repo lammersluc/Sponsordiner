@@ -32,7 +32,7 @@ export default function Home() {
     setReserveringen(await (await data.json()).map((r: any) => {
 
       return (
-        <div className="flex flex-col items-center justify-center w-full p-4 m-2 bg-white rounded-lg shadow-lg">
+        <div key="reserveringen" className="flex flex-col items-center justify-center w-full p-4 m-2 bg-white rounded-lg shadow-lg">
           <p className="text-2xl font-bold" style={{color: 'black'}}>{r.naam}</p>
           <p className="text-xl" style={{color: 'black'}}>{r.email}</p>
           <p className="text-xl" style={{color: 'black'}}>{r.personen} {r.personen == 1 ? 'persoon' : 'personen'}</p>
