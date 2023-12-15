@@ -1,11 +1,13 @@
 import { Elysia, t } from "elysia";
 import { cors } from "@elysiajs/cors";
+import { bearer } from "@elysiajs/bearer";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = new Elysia()
     .use(cors())
+    .use(bearer())
     .post("/api/reserveringen", async ({ body, set }) => {
 
         if (body.personen > 15 || body.personen < 1 || body.wijn > body.personen) { set.status = 406; return; }
@@ -90,8 +92,10 @@ const app = new Elysia()
             extra: t.Optional(t.String())
         })
     })
-    .get("/api/reserveringen", async ({ set }) => {
+    .get("/api/reserveringen", async ({ bearer, set, }) => {
             
+        if (bearer != process.env.BEARER_TOKEN) { set.status = 401; return; }
+
         let data = await Bun.file("data/reserveringen.json").json();
 
         set.status = 200;

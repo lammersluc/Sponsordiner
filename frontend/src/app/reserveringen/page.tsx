@@ -1,38 +1,79 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
 
   const [reserveringen, setReserveringen] = useState([]);
+  const [authData, setAuthData] = useState({
+    token: '',
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await (await fetch('https://maud.lammers.me/api/reserveringen')).json();
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setAuthData({ ...authData, [name]: value })
+  }
 
-      setReserveringen(await data.map((r: any) => {
+  const handleAuth = async (e: any) => {
 
-        return (
-          <div className="flex flex-col items-center justify-center w-full p-4 m-2 bg-white rounded-lg shadow-lg">
-            <p className="text-2xl font-bold" style={{color: 'black'}}>{r.naam}</p>
-            <p className="text-xl" style={{color: 'black'}}>{r.email}</p>
-            <p className="text-xl" style={{color: 'black'}}>{r.personen} personen</p>
-            <p className="text-xl" style={{color: 'black'}}>{r.wijn} personen wijn arrangement</p>
-            <p className="text-xl" style={{color: 'black'}}>{r.extra}</p>
-          </div>
-        );
+    e.preventDefault();
 
-      }));
-      
+    const data = await fetch('https://maud.lammers.me/api/reserveringen', {
+      headers: {
+        'Authorization': `Bearer ${authData.token}`
+      }
+    });
+
+    if (data.status != 200) {
+      alert('De token is niet correct');
+      return;
     }
-    fetchData();
 
-  }, []);
+    setReserveringen(await (await data.json()).map((r: any) => {
+
+      return (
+        <div className="flex flex-col items-center justify-center w-full p-4 m-2 bg-white rounded-lg shadow-lg">
+          <p className="text-2xl font-bold" style={{color: 'black'}}>{r.naam}</p>
+          <p className="text-xl" style={{color: 'black'}}>{r.email}</p>
+          <p className="text-xl" style={{color: 'black'}}>{r.personen} {r.personen == 1 ? 'persoon' : 'personen'}</p>
+          <p className="text-xl" style={{color: 'black'}}>{r.wijn} {r.wijn == 1 ? 'persoon' : 'personen'} wijn</p>
+          <p className="text-xl" style={{color: 'black'}}>{r.extra}</p>
+        </div>
+      );
+
+    }));
+    
+  }
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-8">
       <div className="flex flex-col items-center justify-center w-full p-4">
-      {reserveringen}
+        {reserveringen.length == 0 &&
+            <div className="relative flex flex-col items-center p-14 z-10 rounded-md shadow-m">
+
+            <form onSubmit={handleAuth} className="flex flex-col space-y-4">
+      
+              <label className="flex flex-col">
+                <span className="text-sm font-semibold mb-1">Token</span>
+                <input
+                  type="password"
+                  name="token"
+                  value={authData.token}
+                  onChange={handleChange}
+                  className="border rounded-md p-2"
+                  style={{ color: 'black' }}
+                  required={true}
+                />
+              </label>
+      
+              <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-300">
+                Auth
+              </button>
+      
+            </form>
+      
+          </div>}
+        {reserveringen}
       </div>
     </main>
   )

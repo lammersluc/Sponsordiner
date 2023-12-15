@@ -21,6 +21,7 @@ export default function Home() {
   }
 
   const handleSubmit = async (e: any) => {
+
     e.preventDefault();
 
     if (formData.naam == '') {
@@ -76,12 +77,12 @@ export default function Home() {
       setStatus('Gereserveerd!')
     } else if (result.status == 409) {
       alert('Er is al een reservering gemaakt met dit email adres.')
-      setStatus('Er ging iets fout...')
+      setStatus('Reserveer')
     } else if (result.status == 403) {
       alert('Reserveringen zijn gesloten.')
-      setStatus('Er ging iets fout...')
+      setStatus('Gesloten')
     } else {
-      setStatus('Er ging iets fout...')
+      setStatus('Reserveer')
     }
   }
 
@@ -93,11 +94,11 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         >
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-6 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+        <p className="fixed left-0 top-0 flex w-full justify-center border-b pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:bg-zinc-800/30">
           Doneer nu!&nbsp;
         </p>
         </a>
-        <div className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+        <div className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center bg-gradient-to-t from-black via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
             className="pointer-events-none flex place-items-center gap-2 p-6 lg:pointer-events-auto lg:p-0"
             href="https://www.runforkikamarathon.nl"
@@ -197,9 +198,9 @@ export default function Home() {
 
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left z-10">
         <a
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -213,7 +214,7 @@ export default function Home() {
 
         <a
           href="/calender.ics"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -227,7 +228,7 @@ export default function Home() {
 
         <a
           href="https://www.lust-nu.nl"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -241,7 +242,7 @@ export default function Home() {
 
         <a
           href="https://www.runforkikamarathon.nl/wenen-marathon-2024"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
