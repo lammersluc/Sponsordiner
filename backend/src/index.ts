@@ -23,7 +23,7 @@ const app = new Elysia()
             i += r.personen;
         });
 
-        if (i > 80) { set.status = 403; return; }
+        if (i > parseInt(process.env.MAX_RESERVERINGEN || '')) { set.status = 403; return; }
 
         await data.push(body);
         await Bun.write("data/reserveringen.json", JSON.stringify(data));
