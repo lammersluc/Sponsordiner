@@ -220,7 +220,7 @@ export default function Home() {
             24 Maart{' '}
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Het diner vindt plaats op 24 maart 2024, inloop 17.30-18.00.
+            Op 24 maart 2024 begint het diner om 18.00.
           </p>
         </a>
 
@@ -234,7 +234,7 @@ export default function Home() {
             Lust{' '}
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Het diner zal plaatsvinden bij Lust, een restaurant in Budel.
+            Het diner zal plaatsvinden bij Lust, in Budel.
           </p>
         </a>
 
