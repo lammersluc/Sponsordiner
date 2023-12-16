@@ -36,7 +36,7 @@ const app = new Elysia()
 
         await resend.emails.send({
             from: 'Sponsordiner <onboarding@resend.dev>',
-            to: [body.email],
+            to: [body.email, process.env.BEVESTIGINGSMAIL ?? ''],
             subject: 'Sponsordiner reservering',
             html: createEmail(body)
         });
