@@ -46,7 +46,7 @@ export default function Home() {
     }
 
     if (formData.wijn > formData.personen || formData.wijn < 0) {
-      toast('Incorrect wijn arrangement');
+      toast('Incorrect wijnarrangement');
       return;
     }
 
@@ -177,7 +177,7 @@ export default function Home() {
 
           <label className="flex flex-col">
 
-            <span className="text-sm font-semibold">Dieet Wensen </span><span className="text-xs mb-1">(Vegetarisch, Allergenen...)</span>
+            <span className="text-sm font-semibold">Dieet Wensen</span><span className="text-xs mb-1">(Vegetarisch, Allergenen...)</span>
             <textarea
               name="extra"
               value={formData.extra}
