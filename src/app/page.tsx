@@ -68,7 +68,7 @@ export default function Home() {
       }
     })
 
-    if (result.status == 200) {
+    if (result.status == 201) {
       toast('Bedankt voor uw reservering! U ontvangt een bevestiging per mail')
       setStatus('Gereserveerd!')
     } else if (result.status == 409) {
@@ -78,6 +78,7 @@ export default function Home() {
       toast('Reserveringen zijn gesloten')
       setStatus('Gesloten')
     } else {
+      toast('Er ging iets mis, probeer het later opnieuw')
       setStatus('Reserveer')
     }
   }
