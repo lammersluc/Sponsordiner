@@ -13,11 +13,10 @@ export async function POST(
     const body = await req.json();
 
     if (
-        !body.naam ||
-        !body.email ||
-        !body.personen ||
-        !body.wijn ||
-        !body.extra ||
+        typeof body.naam != 'string' ||
+        typeof body.personen != 'number' ||
+        typeof body.wijn != 'number' ||
+        typeof body.extra != 'string' ||
         body.personen > 15 ||
         body.personen < 1 ||
         body.wijn > body.personen ||
@@ -50,7 +49,7 @@ export async function POST(
 
     await resend.emails.send({
         from: 'Sponsordiner <onboarding@resend.dev>',
-        to: [body.email, process.env.BEVESTIGINGSMAIL || ''],
+        to: [body.email, process.env.BEVESTIGINGSMAIL && process.env.BEVESTIGINGSMAIL.split(',')],
         subject: 'Sponsordiner reservering',
         html: createEmail(body)
     });
