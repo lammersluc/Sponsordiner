@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(process.env.MONGODB_URI || '').then(() => {
-    console.log('MongoDB connected');
-}).catch((err) => {
-    console.log(err);
-});
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI || '');
 
 export default mongoose;
