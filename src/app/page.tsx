@@ -138,7 +138,6 @@ export default function Home() {
 
             <span className="text-sm font-semibold mb-1">Email</span>
             <input
-              color="black"
               type="email"
               name="email"
               value={formData.email}
