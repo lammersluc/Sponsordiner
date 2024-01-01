@@ -51,7 +51,7 @@ export async function POST(
     process.env.BEVESTIGINSMAIL && to.concat(process.env.BEVESTIGINGSMAIL!.split(','));
 
     await resend.emails.send({
-        from: 'Sponsordiner <onboarding@resend.dev>',
+        from: 'Sponsordiner <maud@lammers.me>',
         to,
         subject: 'Sponsordiner reservering',
         html: createEmail(body)
