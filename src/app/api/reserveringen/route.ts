@@ -47,9 +47,12 @@ export async function POST(
         extra: body.extra
     });
 
+    let to = [body.email];
+    process.env.BEVESTIGINSMAIL && to.concat(process.env.BEVESTIGINGSMAIL!.split(','));
+
     await resend.emails.send({
         from: 'Sponsordiner <onboarding@resend.dev>',
-        to: [body.email, process.env.BEVESTIGINGSMAIL && process.env.BEVESTIGINGSMAIL.split(',')],
+        to,
         subject: 'Sponsordiner reservering',
         html: createEmail(body)
     });
