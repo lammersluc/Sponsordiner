@@ -48,7 +48,7 @@ export async function POST(
     });
 
     let to = [body.email];
-    process.env.BEVESTIGINSMAIL && to.concat(process.env.BEVESTIGINGSMAIL!.split(','));
+    process.env.BEVESTIGINGSMAIL && to.concat(process.env.BEVESTIGINGSMAIL!.split(','));
 
     await resend.emails.send({
         from: 'Sponsordiner <maud@lammers.me>',
