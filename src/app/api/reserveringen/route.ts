@@ -13,10 +13,10 @@ export async function POST(
     const body = await req.json();
 
     if (
-        typeof body.naam != 'string' ||
-        typeof body.personen != 'number' ||
-        typeof body.wijn != 'number' ||
-        typeof body.extra != 'string' ||
+        typeof body.naam !== 'string' ||
+        typeof body.personen !== 'number' ||
+        typeof body.wijn !== 'number' ||
+        typeof body.extra !== 'string' ||
         body.personen > 15 ||
         body.personen < 1 ||
         body.wijn > body.personen ||
@@ -48,7 +48,7 @@ export async function POST(
     });
 
     let to = [body.email];
-    process.env.BEVESTIGINGSMAIL && to.concat(process.env.BEVESTIGINGSMAIL!.split(','));
+    if (process.env.MAIL !== undefined) to = to.concat(process.env.MAIL.split(','));
 
     await resend.emails.send({
         from: 'Sponsordiner <maud@lammers.me>',
@@ -65,7 +65,7 @@ export async function GET(
     req: NextRequest,
 ) {
 
-    if ((req.headers.get('Authorization') || '').split("Bearer ")[1] != process.env.BEARER_TOKEN) return NextResponse.json({}, { status: 401 })
+    if ((req.headers.get('Authorization') || '').split("Bearer ")[1] !== process.env.BEARER_TOKEN) return NextResponse.json({}, { status: 401 })
 
     return NextResponse.json(await Reservering.find({}, '-_id -__v'));
 
