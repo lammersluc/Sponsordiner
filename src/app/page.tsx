@@ -11,8 +11,8 @@ export default function Home() {
   const [formData, setFormData] = useState({
     naam: '',
     email: '',
-    personen: 0,
-    wijn: 0,
+    personen: '',
+    wijn: '',
     extra: ''
   });
 
@@ -35,18 +35,26 @@ export default function Home() {
       return;
     }
 
-    if (formData.personen < 1) {
+    const personen = Number(formData.personen);
+    const wijn = Number(formData.wijn);
+
+    if (Number.isNaN(personen) || personen < 1) {
       toast('Vul het aantal personen in');
       return;
     }
 
-    if (formData.personen > 15) {
+    if (personen > 15) {
       toast('Maximaal 15 personen per reservering');
       return;
     }
 
-    if (formData.wijn > formData.personen || formData.wijn < 0) {
+    if (Number.isNaN(wijn) || wijn < 0 ) {
       toast('Incorrect wijnarrangement');
+      return;
+    }
+
+    if (wijn > personen) {
+      toast('Wijnarrangement kan niet hoger zijn dan het aantal personen');
       return;
     }
 
@@ -138,7 +146,9 @@ export default function Home() {
 
             <span className="text-sm font-semibold mb-1">Email</span>
             <input
-              type="email"
+              type="text"
+              inputMode='email'
+              autoCapitalize='off'
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -152,7 +162,8 @@ export default function Home() {
 
             <span className="text-sm font-semibold mb-1">Totaal Personen</span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               name="personen"
               value={formData.personen}
               onChange={handleChange}
@@ -165,7 +176,8 @@ export default function Home() {
 
             <span className="text-sm font-semibold mb-1">Personen Wijnarrangement (+€22,50)</span>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 name="wijn"
                 value={formData.wijn}
                 onChange={handleChange}
