@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -16,17 +16,22 @@ export default function Home() {
     extra: ''
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent) => {
 
     e.preventDefault();
 
-    if (formData.naam == '') {
+    if (formData.naam === '') {
       toast('Vul uw naam in')
+      return;
+    }
+
+    if (formData.email === '') {
+      toast('Vul uw email in')
       return;
     }
 
@@ -76,13 +81,13 @@ export default function Home() {
       }
     })
 
-    if (result.status == 201) {
+    if (result.status === 201) {
       toast('Bedankt voor uw reservering! U ontvangt een bevestiging per mail')
       setStatus('Gereserveerd!')
-    } else if (result.status == 409) {
+    } else if (result.status === 409) {
       toast('Emailadres is al in gebruik')
       setStatus('Reserveer')
-    } else if (result.status == 403) {
+    } else if (result.status === 403) {
       toast('Reserveringen zijn gesloten')
       setStatus('Gesloten')
     } else {
