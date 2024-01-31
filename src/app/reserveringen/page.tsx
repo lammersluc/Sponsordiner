@@ -72,7 +72,7 @@ export default function Home() {
 
     const data = await fetch('/api/reserveringen', {
       headers: {
-        Authorization: `Bearer ${authData.token}`
+        'Authorization': `Bearer ${authData.token}`
       }
     });
 

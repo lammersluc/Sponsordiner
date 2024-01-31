@@ -52,7 +52,7 @@ export async function POST(
     let to = [body.email];
     if (process.env.MAIL !== undefined) to = to.concat(process.env.MAIL.split(','));
 
-    await resend.emails.send({
+    resend.emails.send({
         from: 'Sponsordiner <maud@lammers.me>',
         to,
         subject: 'Sponsordiner reservering',
