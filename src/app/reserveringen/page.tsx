@@ -15,6 +15,8 @@ export default function Home() {
   const [authData, setAuthData] = useState({
     token: '',
   });
+  const [r, setR] = useState<any>({ naam: 'test', email: 'test', personen: 2, wijn: 2, extra: 'test' });
+  const [i, setI] = useState<any>('test');
 
   function reserveringMaker(json: any) {
 
@@ -30,7 +32,7 @@ export default function Home() {
         table.wijn += r.wijn;
 
         return (
-          <div key={i} onClick={() => showExtra(i)} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg hover:cursor-pointer hover:bg-slate-100">
+          <div key={i} onClick={() => showExtra(i)} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
             <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
             <p className="text-xl text-black text-center">{r.email}</p>
             <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
@@ -42,7 +44,7 @@ export default function Home() {
       })
 
       table.header =
-        <div key="header" onClick={switchVisible} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg hover:cursor-pointer hover:bg-slate-100">
+        <div key="header" onClick={switchVisible} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
           <p className="text-2xl font-bold text-black text-center">{key[0].toUpperCase() + key.slice(1)}</p>
           <p className="text-2xl font-bold text-black text-center">Reserveringen: {table.reserveringen.length}</p>
           <p className="text-2xl font-bold text-black text-center">Personen: {table.personen}</p>
@@ -127,7 +129,7 @@ export default function Home() {
                         {tables.families.header}
                       </div>
                       <div className="flex flex-row flex-wrap items-center justify-center p-4">
-                      {tables.families.reserveringen}
+                        {tables.families.reserveringen}
                       </div>
                     </>
                   ) : visible === Tables.ondernemers &&
