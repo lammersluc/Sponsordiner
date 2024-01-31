@@ -68,7 +68,8 @@ export default function Home() {
       email: formData.email.toLowerCase(),
       personen: Number(formData.personen),
       wijn: Number(formData.wijn),
-      extra: formData.extra
+      extra: formData.extra,
+      ondernemer: true
     }
 
     setStatus('Laden...')
