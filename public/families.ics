@@ -4,7 +4,7 @@ PRODID:-//ical.marudot.com//iCal Event Maker
 CALSCALE:GREGORIAN
 BEGIN:VTIMEZONE
 TZID:Europe/Brussels
-LAST-MODIFIED:20230407T050750Z
+LAST-MODIFIED:20231222T233358Z
 TZURL:https://www.tzurl.org/zoneinfo-outlook/Europe/Brussels
 X-LIC-LOCATION:Europe/Brussels
 BEGIN:DAYLIGHT
@@ -23,17 +23,12 @@ RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:20231214T211018Z
+DTSTAMP:20240131T162609Z
 UID:1702588156800-25420@ical.marudot.com
-DTSTART;TZID=Europe/Amsterdam:20240324T053000
-DTEND;TZID=Europe/Amsterdam:20240324T220000
+DTSTART;TZID=Europe/Brussels:20240323T053000
+DTEND;TZID=Europe/Brussels:20240323T220000
 SUMMARY:Sponsordiner Maud Lammers
 DESCRIPTION:Vergeet deze datum niet! Op deze avond wordt een smakelijk diner georganiseerd\, waarvan alle opbrengsten ten goede komen aan KiKa.
 LOCATION:Nieuwstraat 51\, 6021 HP Budel\, Netherlands
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Sponsordiner Maud Lammers
-TRIGGER:-P1D
-END:VALARM
 END:VEVENT
 END:VCALENDAR

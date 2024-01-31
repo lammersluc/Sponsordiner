@@ -221,7 +221,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Kosten{' '}
+            Kosten
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             Het 3-gangen diner kost €49,50 per persoon, exclusief drank.
@@ -229,16 +229,16 @@ export default function Home() {
         </a>
 
         <a
-          href="/calender.ics"
+          href="/ondernemers.ics"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            24 Maart{' '}
+            23 Maart
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Op 24 maart 2024 begint het diner om 18.00.
+            Op 23 maart 2024 begint het diner om 18.00.
           </p>
         </a>
 
@@ -249,7 +249,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Lust{' '}
+            Lust
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             Het diner zal plaatsvinden bij Lust, in Budel.
@@ -263,7 +263,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            KiKa{' '}
+            KiKa
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             De opbrengsten gaan naar de Run For KiKa Marathon.
