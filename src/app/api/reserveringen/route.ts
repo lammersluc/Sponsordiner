@@ -41,13 +41,19 @@ export async function POST(
 
     if (result[0] && result[0].personen + body.personen > parseInt(process.env.MAX_RESERVERINGEN || '')) return NextResponse.json({}, { status: 403 });
 
-    db.create({
-        naam: body.naam,
-        email: body.email,
-        personen: body.personen,
-        wijn: body.wijn,
-        extra: body.extra
-    });
+    try {
+
+        db.create({
+            naam: body.naam,
+            email: body.email,
+            personen: body.personen,
+            wijn: body.wijn,
+            extra: body.extra
+        });
+
+    } catch (e) {
+        return NextResponse.json({}, { status: 500 });
+    }
 
     let to = [body.email];
     if (process.env.MAIL !== undefined) to = to.concat(process.env.MAIL.split(','));
