@@ -6,8 +6,6 @@ import toast from 'react-hot-toast';
 
 export default function Home() {
 
-  const [status, setStatus] = useState('Reserveer');
-
   const [formData, setFormData] = useState({
     naam: '',
     email: '',
@@ -21,79 +19,58 @@ export default function Home() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
 
     e.preventDefault();
 
-    if (formData.naam === '') {
-      toast('Vul uw naam in')
-      return;
-    }
+    const reserveren = new Promise (async (resolve, reject) => {
 
-    if (formData.email === '') {
-      toast('Vul uw email in')
-      return;
-    }
+      if (formData.naam === '') return reject('Vul uw naam in');
+      if (formData.email === '') return reject('Vul uw email in');
 
-    if (!formData.email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-      toast('Email bestaat niet')
-      return;
-    }
+      if (!formData.email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
+        return reject('Email bestaat niet');
 
-    const personen = Number(formData.personen);
-    const wijn = Number(formData.wijn);
+      const personen = Number(formData.personen);
+      const wijn = Number(formData.wijn);
 
-    if (Number.isNaN(personen) || personen < 1) {
-      toast('Vul het aantal personen in');
-      return;
-    }
+      if (Number.isNaN(personen) || personen < 1) return reject('Vul het aantal personen in');
+      if (personen > 15) return reject('Maximaal 15 personen per reservering');
 
-    if (personen > 15) {
-      toast('Maximaal 15 personen per reservering');
-      return;
-    }
+      if (Number.isNaN(wijn) || wijn < 0 ) return reject('Incorrect wijnarrangement');
 
-    if (Number.isNaN(wijn) || wijn < 0 ) {
-      toast('Incorrect wijnarrangement');
-      return;
-    }
+      if (wijn > personen) return reject('Wijnarrangement kan niet hoger zijn dan het aantal personen');
 
-    if (wijn > personen) {
-      toast('Wijnarrangement kan niet hoger zijn dan het aantal personen');
-      return;
-    }
-
-    const body = {
-      naam: formData.naam,
-      email: formData.email.toLowerCase(),
-      personen: Number(formData.personen),
-      wijn: Number(formData.wijn),
-      extra: formData.extra
-    }
-
-    setStatus('Laden...')
-
-    const result = await fetch('/api/reserveringen', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
+      const body = {
+        naam: formData.naam,
+        email: formData.email.toLowerCase(),
+        personen: Number(formData.personen),
+        wijn: Number(formData.wijn),
+        extra: formData.extra
       }
-    })
 
-    if (result.status === 201) {
-      toast('Bedankt voor uw reservering! U ontvangt een bevestiging per mail')
-      setStatus('Gereserveerd!')
-    } else if (result.status === 409) {
-      toast('Emailadres is al in gebruik')
-      setStatus('Reserveer')
-    } else if (result.status === 403) {
-      toast('Reserveringen zijn gesloten')
-      setStatus('Gesloten')
-    } else {
-      toast('Er ging iets mis, probeer het later opnieuw')
-      setStatus('Reserveer')
-    }
+      const result = await fetch('/api/reserveringen', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (result.ok) return resolve('');
+      else if (result.status === 409) return reject('Emailadres is al in gebruik');
+      else if (result.status === 403) return reject('Reserveringen zijn gesloten');
+      
+      return reject('Er ging iets mis, probeer het later opnieuw')
+
+    });
+
+    toast.promise(reserveren, {
+      loading: 'Laden...',
+      success: 'Bedankt voor uw reservering! U ontvangt een bevestiging per mail',
+      error: (error) => error
+    });
+    
   }
 
   return (
@@ -206,7 +183,7 @@ export default function Home() {
           </label>
 
           <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
-            {status}
+            Reserveer
           </button>
 
         </form>
@@ -219,10 +196,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             Kosten
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Het 3-gangen diner kost €49,50 per persoon, exclusief drank.
           </p>
         </a>
@@ -233,10 +210,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             24 Maart
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Op 24 maart 2024 begint het diner om 18.00.
           </p>
         </a>
@@ -247,10 +224,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             Lust
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Het diner zal plaatsvinden bij Lust, in Budel.
           </p>
         </a>
@@ -261,10 +238,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <h2 className="mb-3 text-2xl font-semibold">
             KiKa
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">
             De opbrengsten gaan naar de Run For KiKa Marathon.
           </p>
         </a>

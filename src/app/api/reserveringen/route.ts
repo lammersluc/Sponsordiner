@@ -26,8 +26,6 @@ export async function POST(
 
     const db = body.ondernemer ? Ondernemers : Familie
 
-    if (await db.findOne({ email: body.email })) return NextResponse.json({}, { status: 409 });
-
     const result = await db.aggregate([
         {
             $group: {
@@ -43,7 +41,7 @@ export async function POST(
 
     try {
 
-        db.create({
+        await db.create({
             naam: body.naam,
             email: body.email,
             personen: body.personen,
@@ -51,7 +49,8 @@ export async function POST(
             extra: body.extra
         });
 
-    } catch (e) {
+    } catch (e: any) {
+        if (e.code === 11000) return NextResponse.json({}, { status: 409 });
         return NextResponse.json({}, { status: 500 });
     }
 

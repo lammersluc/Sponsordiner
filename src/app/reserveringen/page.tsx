@@ -15,9 +15,7 @@ export default function Home() {
   const [authData, setAuthData] = useState({
     token: '',
   });
-  const [r, setR] = useState<any>({ naam: 'test', email: 'test', personen: 2, wijn: 2, extra: 'test' });
-  const [i, setI] = useState<any>('test');
-
+  
   function reserveringMaker(json: any) {
 
     let tables: any = { families: {}, ondernemers: {} };
