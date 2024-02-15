@@ -88,7 +88,7 @@ export default function Home() {
   }
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
+    <>
         {
           !tables ? (
             <div className="relative flex flex-col items-center p-14 z-10 rounded-md shadow-m">
@@ -142,6 +142,6 @@ export default function Home() {
           )
         }
 
-    </main>
+    </>
   )
 }

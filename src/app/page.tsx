@@ -49,19 +49,23 @@ export default function Home() {
         extra: formData.extra
       }
 
-      const result = await fetch('/api/reserveringen', {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const result: any = await Promise.race([
+        fetch('/api/reserveringen', {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }),
+        new Promise((resolve) => setTimeout(() => resolve('Timeout'), 5000))
+      ]);
 
-      if (result.ok) return resolve('');
+      if (result === 'Timeout') return reject('Er ging iets mis, probeer het later opnieuw');
+      if (result.ok) return resolve('Success');
       else if (result.status === 409) return reject('Emailadres is al in gebruik');
       else if (result.status === 403) return reject('Reserveringen zijn gesloten');
       
-      return reject('Er ging iets mis, probeer het later opnieuw')
+      return reject('Er ging iets mis, probeer het later opnieuw');
 
     });
 
@@ -74,7 +78,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
+    <>
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <a
         href="https://www.runforkikamarathon.nl/maud-lammers-wenen-2024"
@@ -246,6 +250,6 @@ export default function Home() {
           </p>
         </a>
       </div>
-    </main>
+    </>
   )
 }
