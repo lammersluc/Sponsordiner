@@ -11,8 +11,7 @@ export default function Home() {
     email: '',
     personen: '',
     wijn: '',
-    extra: '',
-    ondernemer: true
+    extra: ''
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,7 +46,8 @@ export default function Home() {
         email: formData.email.toLowerCase(),
         personen: Number(formData.personen),
         wijn: Number(formData.wijn),
-        extra: formData.extra
+        extra: formData.extra,
+        ondernemer: true
       }
 
       const result: any = await Promise.race([

@@ -24,7 +24,7 @@ export async function POST(
         !body.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
         ) return NextResponse.json({}, { status: 406 });
 
-    const db = body.ondernemer ? Ondernemers : Familie
+    const db = await body.ondernemer ? Ondernemers : Familie
 
     const result = await db.aggregate([
         {

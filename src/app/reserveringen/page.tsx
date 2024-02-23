@@ -6,8 +6,8 @@ import toast from 'react-hot-toast';
 export default function Home() {
 
   enum Tables {
-    families,
-    ondernemers
+    families = 'families',
+    ondernemers = 'ondernemers'
   }
 
   const [visible, setVisible] = useState(Tables.families);
@@ -30,19 +30,21 @@ export default function Home() {
         table.wijn += r.wijn;
 
         return (
-          <div key={i} onClick={() => showExtra(i)} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
-            <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
-            <p className="text-xl text-black text-center">{r.email}</p>
-            <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
-            <p className="text-xl text-black text-center">{r.wijn} wijn</p>
-            <p id={i} className="text-xl text-black text-center max-w-xs hidden">{r.extra || 'geen'}</p>
+          <div className='inline-block'>
+            <div key={i} onClick={() => showExtra(i)} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
+              <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
+              <p className="text-xl text-black text-center">{r.email}</p>
+              <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
+              <p className="text-xl text-black text-center">{r.wijn} wijn</p>
+              <p id={i} className="text-xl text-black text-center max-w-xs hidden">{r.extra || 'geen'}</p>
+            </div>
           </div>
         );
 
       })
 
       table.header =
-        <div key="header" onClick={switchVisible} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
+        <div key="header" onClick={switchVisible} className="flex flex-col p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
           <p className="text-2xl font-bold text-black text-center">{key[0].toUpperCase() + key.slice(1)}</p>
           <p className="text-2xl font-bold text-black text-center">Reserveringen: {table.reserveringen.length}</p>
           <p className="text-2xl font-bold text-black text-center">Personen: {table.personen}</p>
@@ -59,7 +61,7 @@ export default function Home() {
 
   const showExtra = (id: string) => document.getElementById(id)?.classList.toggle('hidden');
 
-  const switchVisible = () => setVisible(p => p === Tables.families ? Tables.ondernemers : Tables.families);
+  const switchVisible = () => setVisible((p: any) => p === Tables.families ? Tables.ondernemers : Tables.families);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -70,27 +72,45 @@ export default function Home() {
 
     e.preventDefault();
 
-    const data = await fetch('/api/reserveringen', {
-      headers: {
-        'Authorization': `Bearer ${authData.token}`
+    const promise = new Promise<string>(async (resolve, reject) => {
+
+      const data = await fetch('/api/reserveringen', {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+
+      if (data.status !== 200) {
+        return reject('De token is niet correct');
       }
+
+      reserveringMaker(await data.json());
+
+      resolve('Success');
+
     });
 
-    if (data.status !== 200) {
-      toast('De token is niet correct');
-      return;
-    }
+    toast.promise(promise, {
+      loading: 'Laden...',
+      success: msg => msg,
+      error: err => err
+    });
 
-    reserveringMaker(await data.json());
-
-    toast('Success')
-    
   }
   
   return (
     <>
         {
-          !tables ? (
+          tables ? (
+            <div>
+              <div className='flex justify-center'>
+                {tables[visible].header}
+              </div>
+              <div className="flex flex-row flex-wrap justify-center m-2">
+                {tables[visible].reserveringen}
+              </div>
+            </div>
+          ) : (
             <div className="relative flex flex-col items-center p-14 z-10 rounded-md shadow-m">
 
               <form onSubmit={handleAuth} className="flex flex-col space-y-4">
@@ -117,29 +137,8 @@ export default function Home() {
               </form>
 
             </div>
-          ) : (
-            <>
-              {
-                visible === Tables.families ?
-                  (
-                    <>
-                      <div className="width-full">
-                        {tables.families.header}
-                      </div>
-                      <div className="flex flex-row flex-wrap items-center justify-center p-4">
-                        {tables.families.reserveringen}
-                      </div>
-                    </>
-                  ) : visible === Tables.ondernemers &&
-                  (
-                    <>
-                      {tables.ondernemers.header}
-                      {tables.ondernemers.reserveringen}
-                    </>
-                  )
-              }
-            </>
           )
+
         }
 
     </>
