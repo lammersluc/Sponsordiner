@@ -210,7 +210,7 @@ export default function Home() {
         </a>
 
         <a
-          href="/families.ics"
+          href="/ondernemers.ics"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
@@ -219,7 +219,7 @@ export default function Home() {
             24 Maart
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Op 24 maart 2024 begint het diner om 18.00.
+            Op 23 maart 2024 begint het diner om 18.00.
           </p>
         </a>
 
