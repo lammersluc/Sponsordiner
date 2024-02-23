@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-export default function Home() {
+export default function Page() {
 
   enum Tables {
     families = 'families',

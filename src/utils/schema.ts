@@ -1,4 +1,4 @@
-import mongoose from './db';
+import mongoose from '@/utils/db';
 
 const Schema = mongoose.Schema;
 

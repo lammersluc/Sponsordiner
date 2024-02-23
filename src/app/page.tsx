@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import Image from 'next/image'
 import toast from 'react-hot-toast';
 
-export default function Home() {
+export default function Page() {
 
   const [formData, setFormData] = useState({
     naam: '',
