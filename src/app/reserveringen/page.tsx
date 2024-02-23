@@ -30,8 +30,8 @@ export default function Home() {
         table.wijn += r.wijn;
 
         return (
-          <div className='inline-block'>
-            <div key={i} onClick={() => showExtra(i)} className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
+          <div key={i} onClick={() => showExtra(i)} className='inline-block'>
+            <div className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
               <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
               <p className="text-xl text-black text-center">{r.email}</p>
               <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
