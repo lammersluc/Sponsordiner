@@ -74,19 +74,19 @@ export default function Home() {
 
     const promise = new Promise<string>(async (resolve, reject) => {
 
-      const data = await fetch('/api/reserveringen', {
-        headers: {
-          'Authorization': `Bearer ${authData.token}`
-        }
-      });
+      const result: any = await Promise.race([
+        fetch('/api/reserveringen', {
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(), 10000))
+      ]).catch(() => ({ status: 500, ok: false }));
 
-      if (data.status !== 200) {
-        return reject('De token is niet correct');
-      }
+      if (!result.ok) return reject('De token is niet correct');
 
-      reserveringMaker(await data.json());
-
-      resolve('Success');
+      reserveringMaker(await result.json());
+      resolve('Reserveringen geladen');
 
     });
 
@@ -130,8 +130,8 @@ export default function Home() {
 
                 </label>
 
-                <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
-                  Auth
+                <button type="submit" className="bg-blue-600 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
+                  Bekijk
                 </button>
 
               </form>

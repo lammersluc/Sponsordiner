@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { Familie, Ondernemers } from '../../../utils/schema';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(
     req: NextRequest
@@ -39,31 +39,32 @@ export async function POST(
 
     if (result[0] && result[0].personen + body.personen > parseInt(process.env.MAX_RESERVERINGEN || '')) return NextResponse.json({}, { status: 403 });
 
-    try {
+    // try {
 
-        await db.create({
-            naam: body.naam,
-            email: body.email,
-            personen: body.personen,
-            wijn: body.wijn,
-            extra: body.extra
-        });
+    //     await db.create({
+    //         naam: body.naam,
+    //         email: body.email,
+    //         personen: body.personen,
+    //         wijn: body.wijn,
+    //         extra: body.extra
+    //     });
 
-    } catch (e: any) {
-        if (e.code === 11000) return NextResponse.json({}, { status: 409 });
-        return NextResponse.json({}, { status: 500 });
-    }
+    // } catch (e: any) {
+    //     if (e.code === 11000) return NextResponse.json({}, { status: 409 });
+    //     return NextResponse.json({}, { status: 500 });
+    // }
 
-    let to = [body.email];
-    if (process.env.MAIL !== undefined) to = to.concat(process.env.MAIL.split(','));
+    // let to = [body.email];
+    // if (process.env.MAIL !== undefined) to = to.concat(process.env.MAIL.split(','));
 
-    resend.emails.send({
-        from: 'Sponsordiner <maud@lammers.me>',
-        to,
-        subject: 'Sponsordiner reservering',
-        html: createEmail(body)
-    });
+    // resend.emails.send({
+    //     from: 'Sponsordiner <maud@lammers.me>',
+    //     to,
+    //     subject: 'Sponsordiner reservering',
+    //     html: createEmail(body)
+    // });
     
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     return NextResponse.json({}, { status: 201 });
 
 }

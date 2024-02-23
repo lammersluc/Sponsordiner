@@ -23,7 +23,7 @@ export default function Home() {
 
     e.preventDefault();
 
-    const reserveren = new Promise (async (resolve, reject) => {
+    const promise = new Promise<string>(async (resolve, reject) => {
 
       if (formData.naam === '') return reject('Vul uw naam in');
       if (formData.email === '') return reject('Vul uw email in');
@@ -57,22 +57,25 @@ export default function Home() {
             'Content-Type': 'application/json'
           }
         }),
-        new Promise((resolve) => setTimeout(() => resolve('Timeout'), 5000))
-      ]);
+        new Promise((_, reject) => setTimeout(() => reject(), 1000))
+      ]).catch(() => ({ status: 500, ok: false }));
 
-      if (result === 'Timeout') return reject('Er ging iets mis, probeer het later opnieuw');
-      if (result.ok) return resolve('Success');
-      else if (result.status === 409) return reject('Emailadres is al in gebruik');
-      else if (result.status === 403) return reject('Reserveringen zijn gesloten');
+      if (!result.ok) {
+
+        if (result.status === 409) return reject('Emailadres is al in gebruik');
+        else if (result.status === 403) return reject('Reserveringen zijn gesloten');
+        else return reject('Er ging iets mis, probeer het later opnieuw');
+        
+      }
       
-      return reject('Er ging iets mis, probeer het later opnieuw');
+      return resolve('Bedankt voor uw reservering! U ontvangt een bevestiging per mail');
 
     });
 
-    toast.promise(reserveren, {
+    toast.promise(promise, {
       loading: 'Laden...',
-      success: 'Bedankt voor uw reservering! U ontvangt een bevestiging per mail',
-      error: (error) => error
+      success: msg => msg,
+      error: err => err
     });
     
   }
