@@ -86,7 +86,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         >
-        <p className="z-0 rounded-md left-0 top-0 flex w-full justify-center pb-6 pt-6 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit shadow-lg lg:static lg:w-auto lg:rounded-xl lg:bg-gray-200 lg:p-4 text-lg font-semibold lg:bg-zinc-800/30 lg:hover:bg-zinc-800/35 transition-colors">
+        <p className="z-0 rounded-md left-0 top-0 flex w-full justify-center pb-6 pt-6 backdrop-blur-2xl from-inherit shadow-lg lg:static lg:w-auto lg:rounded-xl lg:p-4 text-lg font-semibold bg-zinc-800/30 hover:bg-zinc-800/40 transition-colors">
           Doneer nu!
         </p>
         </a>
@@ -187,7 +187,7 @@ export default function Home() {
 
           </label>
 
-          <button type="submit" className="bg-blue-500 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
+          <button type="submit" className="bg-blue-600 text-white font-semibold py-2 rounded-md shadow-lg hover:bg-blue-700 transition duration-300">
             Reserveer
           </button>
 
@@ -197,7 +197,7 @@ export default function Home() {
 
       <div className="m-10 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left z-10">
         <a
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
+          className="group rounded-lg px-5 py-4 transition-colors hover:bg-neutral-800/10"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -211,7 +211,7 @@ export default function Home() {
 
         <a
           href="/ondernemers.ics"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
+          className="group rounded-lg px-5 py-4 transition-colors hover:bg-neutral-800/10"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -225,7 +225,7 @@ export default function Home() {
 
         <a
           href="https://www.lust-nu.nl"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
+          className="group rounded-lg px-5 py-4 transition-colors hover:bg-neutral-800/10"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -239,7 +239,7 @@ export default function Home() {
 
         <a
           href="https://www.runforkikamarathon.nl/wenen-marathon-2024"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-neutral-700 hover:bg-neutral-800/30"
+          className="group rounded-lg px-5 py-4 transition-colors hover:bg-neutral-800/10"
           target="_blank"
           rel="noopener noreferrer"
         >
