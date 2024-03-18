@@ -58,7 +58,7 @@ export function createEmail(body: EmailBody) {
             }
     
             #donate {
-                background-color: #2196F3;
+                background-color: rgb(37 99 235);
                 font-weight: bold;
                 color: #fff;
                 padding: 10px;
@@ -72,7 +72,7 @@ export function createEmail(body: EmailBody) {
             }
     
             #donate:hover {
-                background-color: #1565C0;
+                background-color: rgb(29 78 216);
             }
     
         </style>
