@@ -5,63 +5,47 @@ import toast from 'react-hot-toast';
 
 export default function Page() {
 
-  enum Tables {
-    families = 'families',
-    ondernemers = 'ondernemers'
-  }
-
-  const [visible, setVisible] = useState(Tables.families);
-  const [tables, setTables] = useState<any>();
+  const [table, setTable] = useState<any>();
   const [authData, setAuthData] = useState({
     token: '',
   });
   
   function reserveringMaker(json: any) {
 
-    let tables: any = { families: {}, ondernemers: {} };
-    
-    Object.keys(json).forEach((key: string) => {
+    let t: any = { personen: 0, wijn: 0, reserveringen: [] };
 
-      let table: any = { personen: 0, wijn: 0, reserveringen: [] };
+    t.reserveringen = json.map((r: any, i: string) => {
 
-      table.reserveringen = json[key].map((r: any, i: string) => {
+      t.personen += r.personen;
+      t.wijn += r.wijn;
 
-        table.personen += r.personen;
-        table.wijn += r.wijn;
-
-        return (
-          <div key={i} onClick={() => showExtra(i)} className='inline-block'>
-            <div className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
-              <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
-              <p className="text-xl text-black text-center">{r.email}</p>
-              <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
-              <p className="text-xl text-black text-center">{r.wijn} wijn</p>
-              <p id={i} className="text-xl text-black text-center max-w-xs hidden">{r.extra || 'geen'}</p>
-            </div>
+      return (
+        <div key={i} onClick={() => showExtra(i)} className='inline-block'>
+          <div className="flex flex-col items-center p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
+            <p className="text-2xl font-bold text-black text-center">{r.naam}</p>
+            <p className="text-xl text-black text-center">{r.email}</p>
+            <p className="text-xl text-black text-center">{r.personen} {r.personen === 1 ? 'persoon' : 'personen'}</p>
+            <p className="text-xl text-black text-center">{r.wijn} wijn</p>
+            <p id={i} className="text-xl text-black text-center max-w-xs hidden">{r.extra || 'geen'}</p>
           </div>
-        );
-
-      })
-
-      table.header =
-        <div key="header" onClick={switchVisible} className="flex flex-col p-4 m-2 bg-white rounded-2xl shadow-lg transition-colors hover:cursor-pointer hover:bg-slate-200">
-          <p className="text-2xl font-bold text-black text-center">{key[0].toUpperCase() + key.slice(1)}</p>
-          <p className="text-2xl font-bold text-black text-center">Reserveringen: {table.reserveringen.length}</p>
-          <p className="text-2xl font-bold text-black text-center">Personen: {table.personen}</p>
-          <p className="text-2xl font-bold text-black text-center">Wijn: {table.wijn}</p>
-        </div>;
-
-        tables[key] = table;
+        </div>
+      );
 
     });
 
-    setTables(tables);
+    t.header = (
+      <div key="header" className="flex flex-col p-4 m-2 bg-white rounded-2xl shadow-lg">
+        <p className="text-2xl font-bold text-black text-center">Families</p>
+        <p className="text-2xl font-bold text-black text-center">Reserveringen: {t.reserveringen.length}</p>
+        <p className="text-2xl font-bold text-black text-center">Personen: {t.personen}</p>
+        <p className="text-2xl font-bold text-black text-center">Wijn: {t.wijn}</p>
+      </div>
+    );
 
+    setTable(t);
   }
 
   const showExtra = (id: string) => document.getElementById(id)?.classList.toggle('hidden');
-
-  const switchVisible = () => setVisible((p: any) => p === Tables.families ? Tables.ondernemers : Tables.families);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -101,13 +85,13 @@ export default function Page() {
   return (
     <>
         {
-          tables ? (
+          table ? (
             <div>
               <div className='flex justify-center'>
-                {tables[visible].header}
+                {table.header}
               </div>
               <div className="flex flex-row flex-wrap justify-center m-2">
-                {tables[visible].reserveringen}
+                {table.reserveringen}
               </div>
             </div>
           ) : (
@@ -142,5 +126,5 @@ export default function Page() {
         }
 
     </>
-  )
+  );
 }

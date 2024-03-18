@@ -212,7 +212,7 @@ export default function Page() {
         </a>
 
         <a
-          href="/families.ics"
+          href="/sponsordiner.ics"
           className="group rounded-lg px-5 py-4 transition-colors hover:bg-neutral-800/10"
           target="_blank"
           rel="noopener noreferrer"
