@@ -235,7 +235,7 @@ export default function Page() {
             Lust
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Het diner zal plaatsvinden bij Lust, in Budel.
+            Het diner zal plaatsvinden bij Lust, Nieuwstraat 51, Budel.
           </p>
         </a>
 
