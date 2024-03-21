@@ -57,7 +57,7 @@ export default function Page() {
             'Content-Type': 'application/json'
           }
         }),
-        new Promise((_, reject) => setTimeout(() => reject(), 1000))
+        new Promise((_, reject) => setTimeout(() => reject(), 10000))
       ]).catch(() => ({ status: 500, ok: false }));
 
       if (!result.ok) {
