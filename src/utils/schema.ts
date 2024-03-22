@@ -30,4 +30,4 @@ const reserveringSchema = new Schema({
     }
 });
 
-export const Families = mongoose.model('Familie', reserveringSchema);
+export const Reservering = mongoose.model('Reservering', reserveringSchema);
