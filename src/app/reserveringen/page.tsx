@@ -38,7 +38,7 @@ export default function Page() {
         <p className="text-2xl font-bold text-black text-center">Reserveringen: {t.reserveringen.length}</p>
         <p className="text-2xl font-bold text-black text-center">Personen: {t.personen}</p>
         <p className="text-2xl font-bold text-black text-center">Wijn: {t.wijn}</p>
-        <p className="text-2xl font-bold text-black text-center">Opbrensten: {((t.personen * 24.5) + (t.wijn * 12.5)).toLocaleString("nl-NL", {style:"currency", currency:"EUR"})}</p>
+        <p className="text-2xl font-bold text-black text-center">Opbrengsten: {((t.personen * 24.5) + (t.wijn * 12.5)).toLocaleString("nl-NL", {style:"currency", currency:"EUR"})}</p>
       </div>
     );
 
