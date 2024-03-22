@@ -35,10 +35,10 @@ export default function Page() {
 
     t.header = (
       <div key="header" className="flex flex-col p-4 m-2 bg-white rounded-2xl shadow-lg">
-        <p className="text-2xl font-bold text-black text-center">Families</p>
         <p className="text-2xl font-bold text-black text-center">Reserveringen: {t.reserveringen.length}</p>
         <p className="text-2xl font-bold text-black text-center">Personen: {t.personen}</p>
         <p className="text-2xl font-bold text-black text-center">Wijn: {t.wijn}</p>
+        <p className="text-2xl font-bold text-black text-center">Opbrensten: {((t.personen * 24.5) + (t.wijn * 12.5)).toLocaleString("nl-NL", {style:"currency", currency:"EUR"})}</p>
       </div>
     );
 
